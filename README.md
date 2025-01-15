@@ -1,1 +1,1 @@
-# This will contain the information about ideas shared during Python Glasgow Meetups
+This will contain the information about ideas shared during Python Glasgow Meetups
