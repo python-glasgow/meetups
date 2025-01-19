@@ -1,7 +1,5 @@
 # Topic ideas discussed
 
-## Workshops:
-
 - Jupiter workbooks
 - Unit Testing
 - Working with open data (Government)
