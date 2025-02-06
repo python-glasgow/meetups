@@ -1,1 +1,1 @@
-This repository will contain files and information related with Python Glasgow Meetups.
+This repository contains resources from the Python Glasgow Meetups.
