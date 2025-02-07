@@ -24,6 +24,12 @@
         ]
       },
       {
+        "title": "Groovebasin to Dokuwiki: Using BeautifulSoup for html to wiki table data transformation",
+        "speaker": "William Nelson",
+        "talkDescription": "A demonstration of using Python for a specific use case; taking music playlists from the web application Groovebasin and transforming it into Dokuwiki formatted tables to be archived on a wiki. Uses the Python library BeautifulSoup which is an html parser.",
+        "matrixAccount": "@sajuuk:matrix.org"
+      },
+      {
         "title": "From Dirty Nappies to Clean Data: Analysing Newborn Care with Python",
         "speaker": "Juan Palomeque-Gonzalez",
         "resources": [
