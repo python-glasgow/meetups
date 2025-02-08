@@ -10,10 +10,22 @@
             "location": "The Gamer Club, Bath Lane",
             "talks": [
                 {
-                    "talk_id": 1,
+                    "talk_id": 2,
                     "title": "Simple demo on UV",
-                    "speakers": "Gabriele Calvo",
                     "description": "",
+                    "speakers": [
+                        {
+                            "talk_speaker_id": 2,
+                            "name": "Gabriele Calvo",
+                            "bio": null,
+                            "extra_field_one_label": null,
+                            "extra_field_one_value": null,
+                            "extra_field_two_label": null,
+                            "extra_field_two_value": null,
+                            "extra_field_three_label": null,
+                            "extra_field_three_value": null
+                        }
+                    ],
                     "resources": [
                         {
                             "talk_resource_id": 1,
@@ -23,10 +35,22 @@
                     ]
                 },
                 {
-                    "talk_id": 2,
+                    "talk_id": 3,
                     "title": "From Dirty Nappies to Clean Data: Analysing Newborn Care with Python",
-                    "speakers": "Juan Palomeque-Gonzalez",
                     "description": "",
+                    "speakers": [
+                        {
+                            "talk_speaker_id": 3,
+                            "name": "Juan Palomeque-Gonzalez",
+                            "bio": null,
+                            "extra_field_one_label": null,
+                            "extra_field_one_value": null,
+                            "extra_field_two_label": null,
+                            "extra_field_two_value": null,
+                            "extra_field_three_label": null,
+                            "extra_field_three_value": null
+                        }
+                    ],
                     "resources": [
                         {
                             "talk_resource_id": 2,
@@ -36,17 +60,41 @@
                     ]
                 },
                 {
-                    "talk_id": 3,
+                    "talk_id": 4,
                     "title": "Unknown",
-                    "speakers": "Paul Mullen",
                     "description": "",
+                    "speakers": [
+                        {
+                            "talk_speaker_id": 4,
+                            "name": "Ed",
+                            "bio": null,
+                            "extra_field_one_label": null,
+                            "extra_field_one_value": null,
+                            "extra_field_two_label": null,
+                            "extra_field_two_value": null,
+                            "extra_field_three_label": null,
+                            "extra_field_three_value": null
+                        }
+                    ],
                     "resources": []
                 },
                 {
-                    "talk_id": 4,
+                    "talk_id": 5,
                     "title": "Unknown",
-                    "speakers": "Ed",
                     "description": "",
+                    "speakers": [
+                        {
+                            "talk_speaker_id": 5,
+                            "name": "Paul Mullen",
+                            "bio": null,
+                            "extra_field_one_label": null,
+                            "extra_field_one_value": null,
+                            "extra_field_two_label": null,
+                            "extra_field_two_value": null,
+                            "extra_field_three_label": null,
+                            "extra_field_three_value": null
+                        }
+                    ],
                     "resources": []
                 }
             ],
