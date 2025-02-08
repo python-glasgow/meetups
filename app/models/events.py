@@ -63,12 +63,12 @@ class Events(db.Model):
     def delete(cls, event_id):
         from app.models import Talks, Workshops
 
-        select_talks = s.select(Talks).where(cls.event_id == event_id)
+        select_talks = s.select(Talks).where(Talks.fk_event_id == event_id)
         talks = db.session.execute(select_talks).scalars().all()
         for talk in talks:
             Talks.delete(talk.talk_id)
 
-        select_workshops = s.select(Workshops).where(cls.event_id == event_id)
+        select_workshops = s.select(Workshops).where(Workshops.fk_event_id == event_id)
         workshops = db.session.execute(select_workshops).scalars().all()
         for workshop in workshops:
             Workshops.delete(workshop.workshop_id)
