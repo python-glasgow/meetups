@@ -10,9 +10,9 @@ class Talks(db.Model):
 
     title = s.Column(s.String(255))
     description = s.Column(s.String(255))
-    speakers = s.Column(s.String(255))
 
     rel_talk_resources = s.orm.relationship("TalkResources")
+    rel_talk_speakers = s.orm.relationship("TalkSpeakers")
 
     @classmethod
     def get_by_id(cls, talk_id):
@@ -27,13 +27,12 @@ class Talks(db.Model):
         return re_
 
     @classmethod
-    def create(cls, title, description, speakers, event_id):
+    def create(cls, title, description, event_id):
         ins_ = (
             s.insert(cls)
             .values(
                 title=title,
                 description=description,
-                speakers=speakers,
                 fk_event_id=event_id,
             )
             .returning(cls)
@@ -43,14 +42,13 @@ class Talks(db.Model):
         return re_
 
     @classmethod
-    def update(cls, talk_id, title=None, description=None, speakers=None):
+    def update(cls, talk_id, title=None, description=None):
         up_ = (
             s.update(cls)
             .where(cls.talk_id == talk_id)
             .values(
                 title=title,
                 description=description,
-                speakers=speakers,
             )
         )
         db.session.execute(up_)
@@ -58,9 +56,10 @@ class Talks(db.Model):
 
     @classmethod
     def delete(cls, talk_id):
-        from app.models import TalkResources
+        from app.models import TalkResources, TalkSpeakers
 
         TalkResources.delete_by_talk_id(talk_id)
+        TalkSpeakers.delete_by_talk_id(talk_id)
 
         de_ = s.delete(cls).where(cls.talk_id == talk_id)
         db.session.execute(de_)

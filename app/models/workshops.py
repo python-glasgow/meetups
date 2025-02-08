@@ -10,9 +10,9 @@ class Workshops(db.Model):
 
     title = s.Column(s.String(255))
     description = s.Column(s.String)
-    hosts = s.Column(s.String)
 
     rel_workshop_resources = s.orm.relationship("WorkshopResources")
+    rel_workshop_hosts = s.orm.relationship("WorkshopHosts")
 
     @classmethod
     def get_by_id(cls, workshop_id):
@@ -27,13 +27,12 @@ class Workshops(db.Model):
         return re_
 
     @classmethod
-    def create(cls, title, description, hosts, event_id):
+    def create(cls, title, description, event_id):
         ins_ = (
             s.insert(cls).values(
                 fk_event_id=event_id,
                 title=title,
                 description=description,
-                hosts=hosts,
             )
         ).returning(cls)
         re_ = db.session.execute(ins_).scalars().first()
@@ -55,9 +54,10 @@ class Workshops(db.Model):
 
     @classmethod
     def delete(cls, workshop_id):
-        from app.models import WorkshopResources
+        from app.models import WorkshopResources, WorkshopHosts
 
         WorkshopResources.delete_by_workshop_id(workshop_id)
+        WorkshopHosts.delete_by_workshop_id(workshop_id)
 
         de_ = s.delete(cls).where(cls.workshop_id == workshop_id)
         db.session.execute(de_)

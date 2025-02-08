@@ -58,7 +58,9 @@
             {% for talk in event.rel_talks %}
                 <tr>
                     <td>{{ talk.title }}</td>
-                    <td>{{ talk.speakers }}</td>
+                    <td>
+                        {{ talk.rel_talk_speakers|join(', ', attribute='name') }}
+                    </td>
                     <td>
                         <a href="{{ url_for('talk', event_id=event.event_id, talk_id=talk.talk_id) }}">Open</a>
                         |
@@ -99,7 +101,9 @@
             {% for workshop in event.rel_workshops %}
                 <tr>
                     <td>{{ workshop.title }}</td>
-                    <td>{{ workshop.hosts }}</td>
+                    <td>
+                        {{ workshop.rel_workshop_hosts|join(', ', attribute='name') }}
+                    </td>
                     <td>
                         <a href="{{ url_for('workshop', event_id=event.event_id, workshop_id=workshop.workshop_id) }}">Open</a>
                         |

@@ -35,6 +35,199 @@
         <button type="submit">Update</button>
     </form>
 
+
+    {#
+
+HOSTS HOSTS HOSTS HOSTS HOSTS HOSTS HOSTS
+
+#}
+
+    <h2>Hosts</h2>
+
+    <div class="top-link">
+        <a class="a-button" @click="create_host_dialog.showModal()">Create Resource</a>
+    </div>
+
+    <div x-show="hosts.length > 0" x-cloak>
+        <div class="person-list">
+            <template x-for="host in hosts">
+                <div class="person">
+
+                    <h3 x-text="host.name"></h3>
+
+                    <p x-show="host.bio" x-text="host.bio"></p>
+
+                    <div class="person-label-list">
+
+                        <div class="person-label" x-show="host.extra_field_one_label">
+                            <p><span x-text="host.extra_field_one_label"></span>:</p>
+
+                            <a x-bind:href="host.extra_field_one_value"
+                               x-text="host.extra_field_one_value"
+                               x-show="host.extra_field_one_value && host.extra_field_one_value.includes('http')"
+                               target="_blank"></a>
+
+                            <p x-text="host.extra_field_one_value"
+                               x-show="host.extra_field_one_value && !host.extra_field_one_value.includes('http')"></p>
+                        </div>
+
+                        <div class="person-label" x-show="host.extra_field_two_label">
+                            <p><span x-text="host.extra_field_two_label"></span>:</p>
+
+                            <a x-bind:href="host.extra_field_two_value"
+                               x-text="host.extra_field_two_value"
+                               x-show="host.extra_field_two_value && host.extra_field_two_value.includes('http')"
+                               target="_blank"></a>
+
+                            <p x-text="host.extra_field_two_value"
+                               x-show="host.extra_field_two_value && !host.extra_field_two_value.includes('http')"></p>
+                        </div>
+
+                        <div class="person-label" x-show="host.extra_field_three_label">
+                            <p><span x-text="host.extra_field_three_label"></span>:</p>
+
+                            <a x-bind:href="host.extra_field_three_value"
+                               x-text="host.extra_field_three_value"
+                               x-show="host.extra_field_three_value && host.extra_field_three_value.includes('http')"
+                               target="_blank"></a>
+
+                            <p x-text="host.extra_field_three_value"
+                               x-show="host.extra_field_three_value && !host.extra_field_three_value.includes('http')"></p>
+                        </div>
+
+                    </div>
+
+                    <div>
+                        <button @click="set_host_update(
+                    host.workshop_host_id,
+                    host.name,
+                    host.bio,
+                    host.extra_field_one_label,
+                    host.extra_field_one_value,
+                    host.extra_field_two_label,
+                    host.extra_field_two_value,
+                    host.extra_field_three_label,
+                    host.extra_field_three_value,
+                    )">Update
+                        </button>
+                        <button @click="set_host_delete(
+                    host.workshop_host_id,
+                    host.name,
+                    )">Delete
+                        </button>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <div class="box" x-show="hosts.length === 0" x-cloak>
+        <p>No Hosts</p>
+    </div>
+
+    <dialog id="dialog-create-host">
+        <form @submit.prevent
+              class="form"
+              style="min-width: 500px;">
+
+            <h3>Create Host</h3>
+
+            <label for="person-name">Name</label>
+            <input id="person-name" type="text" name="name" x-model="create_workshop_host_name">
+
+            <label for="person-bio">Bio</label>
+            <textarea id="person-bio" name="bio" x-model="create_workshop_host_bio"></textarea>
+
+            <div class="field-box">
+                <label for="person-extra-field-one-label">Extra Field One</label>
+                <input id="person-extra-field-one-label" type="text"
+                       name="extra_field_one_label" x-model="create_workshop_host_extra_field_one_label">
+                <label for="person-extra-field-one-value">Extra Field One Value</label>
+                <input id="person-extra-field-one-value" type="text"
+                       name="extra_field_one_value" x-model="create_workshop_host_extra_field_one_value">
+            </div>
+            <div class="field-box">
+                <label for="person-extra-field-two-label">Extra Field One</label>
+                <input id="person-extra-field-two-label" type="text"
+                       name="extra_field_two_label" x-model="create_workshop_host_extra_field_two_label">
+                <label for="person-extra-field-two-value">Extra Field One Value</label>
+                <input id="person-extra-field-two-value" type="text"
+                       name="extra_field_two_value" x-model="create_workshop_host_extra_field_two_value">
+            </div>
+            <div class="field-box">
+                <label for="person-extra-field-three-label">Extra Field One</label>
+                <input id="person-extra-field-three-label" type="text"
+                       name="extra_field_three_label" x-model="create_workshop_host_extra_field_three_label">
+                <label for="person-extra-field-three-value">Extra Field One Value</label>
+                <input id="person-extra-field-three-value" type="text"
+                       name="extra_field_three_value" x-model="create_workshop_host_extra_field_three_value">
+            </div>
+            <button type="submit" @click="create_host()">Create</button>
+            <button type="button" @click="create_host_dialog.close()">Cancel</button>
+        </form>
+    </dialog>
+
+    <dialog id="dialog-update-host">
+        <form @submit.prevent
+              class="form"
+              style="min-width: 500px;">
+
+            <h3>Update Host</h3>
+
+            <label for="person-name">Name</label>
+            <input id="person-name" type="text" name="name" x-model="update_workshop_host_name">
+
+            <label for="person-bio">Bio</label>
+            <textarea id="person-bio" name="bio" x-model="update_workshop_host_bio"></textarea>
+
+            <div class="field-box">
+                <label for="person-extra-field-one-label">Extra Field Label</label>
+                <input id="person-extra-field-one-label" type="text"
+                       name="extra_field_one_label" x-model="update_workshop_host_extra_field_one_label">
+                <label for="person-extra-field-one-value">Extra Field Value</label>
+                <input id="person-extra-field-one-value" type="text"
+                       name="extra_field_one_value" x-model="update_workshop_host_extra_field_one_value">
+            </div>
+            <div class="field-box">
+                <label for="person-extra-field-two-label">Extra Field Label</label>
+                <input id="person-extra-field-two-label" type="text"
+                       name="extra_field_two_label" x-model="update_workshop_host_extra_field_two_label">
+                <label for="person-extra-field-two-value">Extra Field Value</label>
+                <input id="person-extra-field-two-value" type="text"
+                       name="extra_field_two_value" x-model="update_workshop_host_extra_field_two_value">
+            </div>
+            <div class="field-box">
+                <label for="person-extra-field-three-label">Extra Field Label</label>
+                <input id="person-extra-field-three-label" type="text"
+                       name="extra_field_three_label" x-model="update_workshop_host_extra_field_three_label">
+                <label for="person-extra-field-three-value">Extra Field Value</label>
+                <input id="person-extra-field-three-value" type="text"
+                       name="extra_field_three_value" x-model="update_workshop_host_extra_field_three_value">
+            </div>
+            <button type="submit" @click="update_host()">Update</button>
+            <button type="button" @click="update_host_dialog.close()">Cancel</button>
+        </form>
+    </dialog>
+
+    <dialog id="dialog-delete-host">
+        <div style="display: flex; flex-direction: column; gap: .50rem;">
+            <h3>Delete Host</h3>
+
+            <p style="margin: 0">Are you sure you want to delete this host?</p>
+
+            <p x-text="delete_workshop_host_name" style="padding: 1rem"></p>
+
+            <button type="submit" @click="delete_host()">Delete</button>
+            <button type="button" @click="delete_host_dialog.close()">Cancel</button>
+        </div>
+    </dialog>
+
+    {#
+
+RESOURCES RESOURCES RESOURCES RESOURCES RESOURCES RESOURCES RESOURCES
+
+#}
+
     <h2>Resources</h2>
 
     <div class="top-link">
@@ -55,13 +248,13 @@
                 <td x-text="resource.type"></td>
                 <td x-text="resource.source"></td>
                 <td>
-                    <a @click="set_update(
+                    <a @click="set_resource_update(
                     resource.workshop_resource_id,
                     resource.type,
                     resource.source
                     )">Update</a>
                     |
-                    <a @click="set_delete(
+                    <a @click="set_resource_delete(
                     resource.workshop_resource_id,
                     resource.source,
                     )">Delete</a>

@@ -5,12 +5,16 @@ from urllib import request
 from flask import Flask, render_template, request, redirect, url_for
 
 from app.extensions import db
-from app.models import Events, Talks, Workshops, TalkResources, WorkshopResources
+from app.models import (
+    Events,
+    Talks,
+    Workshops,
+    TalkResources,
+    WorkshopResources,
+    TalkSpeakers,
+    WorkshopHosts,
+)
 from app.services import ArchiveJson
-
-
-def import_models():
-    import app.models
 
 
 def create_app():
@@ -21,8 +25,6 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///main.db"
 
     db.init_app(app)
-
-    import_models()
 
     with app.app_context():
         db.create_all()
@@ -87,22 +89,20 @@ def create_app():
 
     @app.get("/event/<int:event_id>/talk/create")
     def talk_create_get(
-            event_id: int,
+        event_id: int,
     ):
         event_ = Events.get_by_id(event_id)
         return render_template("talk-create.html", event=event_)
 
     @app.post("/event/<int:event_id>/talk/create")
     def talk_create_post(
-            event_id: int,
+        event_id: int,
     ):
         title = request.form.get("title")
-        speakers = request.form.get("speakers")
         description = request.form.get("description")
 
         new_talk = Talks.create(
             title=title,
-            speakers=speakers,
             description=description,
             event_id=event_id,
         )
@@ -118,12 +118,10 @@ def create_app():
     @app.post("/event/<int:event_id>/talk/<int:talk_id>/update")
     def talk_update(event_id: int, talk_id: int):
         title = request.form.get("title")
-        speakers = request.form.get("speakers")
         description = request.form.get("description")
         Talks.update(
             talk_id=talk_id,
             title=title,
-            speakers=speakers,
             description=description,
         )
         return redirect(url_for("talk", event_id=event_id, talk_id=talk_id))
@@ -132,6 +130,127 @@ def create_app():
     def talk_delete(event_id: int, talk_id: int):
         Talks.delete(talk_id)
         return redirect(url_for("event", event_id=event_id))
+
+    # TALK SPEAKERS
+
+    @app.post("/fetch/talk/speakers")
+    def fetch_talk_speakers():
+        jsond = request.get_json()
+
+        event_id = jsond["event_id"]
+        talk_id = jsond["talk_id"]
+
+        talk_speakers = TalkSpeakers.get_by_talk_id(talk_id)
+
+        return {
+            "event_id": event_id,
+            "talk_id": talk_id,
+            "talk_speakers": [
+                {
+                    "talk_speaker_id": r.talk_speaker_id,
+                    "name": r.name,
+                    "bio": r.bio,
+                    "extra_field_one_label": r.extra_field_one_label,
+                    "extra_field_one_value": r.extra_field_one_value,
+                    "extra_field_two_label": r.extra_field_two_label,
+                    "extra_field_two_value": r.extra_field_two_value,
+                    "extra_field_three_label": r.extra_field_three_label,
+                    "extra_field_three_value": r.extra_field_three_value,
+                }
+                for r in talk_speakers
+            ],
+        }
+
+    @app.post("/fetch/talk/speakers/create")
+    def fetch_talk_speakers_create():
+        jsond = request.get_json()
+
+        talk_id = jsond["talk_id"]
+        name = jsond["name"]
+        bio = jsond["bio"]
+        extra_field_one_label = jsond["extra_field_one_label"]
+        extra_field_one_value = jsond["extra_field_one_value"]
+        extra_field_two_label = jsond["extra_field_two_label"]
+        extra_field_two_value = jsond["extra_field_two_value"]
+        extra_field_three_label = jsond["extra_field_three_label"]
+        extra_field_three_value = jsond["extra_field_three_value"]
+
+        new_talk_speaker = TalkSpeakers.create(
+            talk_id=talk_id,
+            name=name,
+            bio=bio,
+            extra_field_one_label=extra_field_one_label,
+            extra_field_one_value=extra_field_one_value,
+            extra_field_two_label=extra_field_two_label,
+            extra_field_two_value=extra_field_two_value,
+            extra_field_three_label=extra_field_three_label,
+            extra_field_three_value=extra_field_three_value,
+        )
+
+        return {
+            "talk_id": talk_id,
+            "talk_speaker_id": new_talk_speaker.talk_speaker_id,
+            "name": name,
+            "bio": bio,
+            "extra_field_one_label": extra_field_one_label,
+            "extra_field_one_value": extra_field_one_value,
+            "extra_field_two_label": extra_field_two_label,
+            "extra_field_two_value": extra_field_two_value,
+            "extra_field_three_label": extra_field_three_label,
+            "extra_field_three_value": extra_field_three_value,
+        }
+
+    @app.post("/fetch/talk/speakers/update")
+    def fetch_talk_speakers_update():
+        jsond = request.get_json()
+
+        talk_speaker_id = jsond["talk_speaker_id"]
+        name = jsond["name"]
+        bio = jsond["bio"]
+        extra_field_one_label = jsond["extra_field_one_label"]
+        extra_field_one_value = jsond["extra_field_one_value"]
+        extra_field_two_label = jsond["extra_field_two_label"]
+        extra_field_two_value = jsond["extra_field_two_value"]
+        extra_field_three_label = jsond["extra_field_three_label"]
+        extra_field_three_value = jsond["extra_field_three_value"]
+
+        TalkSpeakers.update(
+            talk_speaker_id=talk_speaker_id,
+            name=name,
+            bio=bio,
+            extra_field_one_label=extra_field_one_label,
+            extra_field_one_value=extra_field_one_value,
+            extra_field_two_label=extra_field_two_label,
+            extra_field_two_value=extra_field_two_value,
+            extra_field_three_label=extra_field_three_label,
+            extra_field_three_value=extra_field_three_value,
+        )
+
+        return {
+            "talk_speaker_id": talk_speaker_id,
+            "name": name,
+            "bio": bio,
+            "extra_field_one_label": extra_field_one_label,
+            "extra_field_one_value": extra_field_one_value,
+            "extra_field_two_label": extra_field_two_label,
+            "extra_field_two_value": extra_field_two_value,
+            "extra_field_three_label": extra_field_three_label,
+            "extra_field_three_value": extra_field_three_value,
+        }
+
+    @app.post("/fetch/talk/speakers/delete")
+    def fetch_talk_speakers_delete():
+        jsond = request.get_json()
+
+        talk_speaker_id = jsond["talk_speaker_id"]
+
+        TalkSpeakers.delete(talk_speaker_id)
+
+        return {
+            "talk_speaker_id": talk_speaker_id,
+        }
+
+    # TALK RESOURCES
 
     @app.post("/fetch/talk/resources")
     def fetch_talk_resources():
@@ -212,23 +331,21 @@ def create_app():
 
     @app.get("/event/<int:event_id>/workshop/create")
     def workshop_create_get(
-            event_id: int,
+        event_id: int,
     ):
         event_ = Events.get_by_id(event_id)
         return render_template("workshop-create.html", event=event_)
 
     @app.post("/event/<int:event_id>/workshop/create")
     def workshop_create_post(
-            event_id: int,
+        event_id: int,
     ):
         title = request.form.get("title")
         description = request.form.get("description")
-        hosts = request.form.get("hosts")
 
         new_workshop = Workshops.create(
             title=title,
             description=description,
-            hosts=hosts,
             event_id=event_id,
         )
 
@@ -261,6 +378,127 @@ def create_app():
     def workshop_delete(event_id: int, workshop_id: int):
         Workshops.delete(workshop_id)
         return redirect(url_for("event", event_id=event_id))
+
+    # WORKSHOP HOSTS
+
+    @app.post("/fetch/workshop/hosts")
+    def fetch_workshop_hosts():
+        jsond = request.get_json()
+
+        event_id = jsond["event_id"]
+        workshop_id = jsond["workshop_id"]
+
+        workshop_hosts = WorkshopHosts.get_by_workshop_id(workshop_id)
+
+        return {
+            "event_id": event_id,
+            "workshop_id": workshop_id,
+            "workshop_hosts": [
+                {
+                    "workshop_host_id": r.workshop_host_id,
+                    "name": r.name,
+                    "bio": r.bio,
+                    "extra_field_one_label": r.extra_field_one_label,
+                    "extra_field_one_value": r.extra_field_one_value,
+                    "extra_field_two_label": r.extra_field_two_label,
+                    "extra_field_two_value": r.extra_field_two_value,
+                    "extra_field_three_label": r.extra_field_three_label,
+                    "extra_field_three_value": r.extra_field_three_value,
+                }
+                for r in workshop_hosts
+            ],
+        }
+
+    @app.post("/fetch/workshop/hosts/create")
+    def fetch_workshop_hosts_create():
+        jsond = request.get_json()
+
+        workshop_id = jsond["workshop_id"]
+        name = jsond["name"]
+        bio = jsond["bio"]
+        extra_field_one_label = jsond["extra_field_one_label"]
+        extra_field_one_value = jsond["extra_field_one_value"]
+        extra_field_two_label = jsond["extra_field_two_label"]
+        extra_field_two_value = jsond["extra_field_two_value"]
+        extra_field_three_label = jsond["extra_field_three_label"]
+        extra_field_three_value = jsond["extra_field_three_value"]
+
+        new_workshop_host = WorkshopHosts.create(
+            workshop_id=workshop_id,
+            name=name,
+            bio=bio,
+            extra_field_one_label=extra_field_one_label,
+            extra_field_one_value=extra_field_one_value,
+            extra_field_two_label=extra_field_two_label,
+            extra_field_two_value=extra_field_two_value,
+            extra_field_three_label=extra_field_three_label,
+            extra_field_three_value=extra_field_three_value,
+        )
+
+        return {
+            "workshop_id": workshop_id,
+            "workshop_host_id": new_workshop_host.workshop_host_id,
+            "name": name,
+            "bio": bio,
+            "extra_field_one_label": extra_field_one_label,
+            "extra_field_one_value": extra_field_one_value,
+            "extra_field_two_label": extra_field_two_label,
+            "extra_field_two_value": extra_field_two_value,
+            "extra_field_three_label": extra_field_three_label,
+            "extra_field_three_value": extra_field_three_value,
+        }
+
+    @app.post("/fetch/workshop/hosts/update")
+    def fetch_workshop_hosts_update():
+        jsond = request.get_json()
+
+        workshop_host_id = jsond["workshop_host_id"]
+        name = jsond["name"]
+        bio = jsond["bio"]
+        extra_field_one_label = jsond["extra_field_one_label"]
+        extra_field_one_value = jsond["extra_field_one_value"]
+        extra_field_two_label = jsond["extra_field_two_label"]
+        extra_field_two_value = jsond["extra_field_two_value"]
+        extra_field_three_label = jsond["extra_field_three_label"]
+        extra_field_three_value = jsond["extra_field_three_value"]
+
+        WorkshopHosts.update(
+            workshop_host_id=workshop_host_id,
+            name=name,
+            bio=bio,
+            extra_field_one_label=extra_field_one_label,
+            extra_field_one_value=extra_field_one_value,
+            extra_field_two_label=extra_field_two_label,
+            extra_field_two_value=extra_field_two_value,
+            extra_field_three_label=extra_field_three_label,
+            extra_field_three_value=extra_field_three_value,
+        )
+
+        return {
+            "workshop_host_id": workshop_host_id,
+            "name": name,
+            "bio": bio,
+            "extra_field_one_label": extra_field_one_label,
+            "extra_field_one_value": extra_field_one_value,
+            "extra_field_two_label": extra_field_two_label,
+            "extra_field_two_value": extra_field_two_value,
+            "extra_field_three_label": extra_field_three_label,
+            "extra_field_three_value": extra_field_three_value,
+        }
+
+    @app.post("/fetch/workshop/hosts/delete")
+    def fetch_workshop_hosts_delete():
+        jsond = request.get_json()
+
+        workshop_host_id = jsond["workshop_host_id"]
+
+        WorkshopHosts.delete(workshop_host_id)
+
+        return {
+            "workshop_host_id": workshop_host_id,
+        }
+
+    # WORKSHOP RESOURCES
 
     @app.post("/fetch/workshop/resources")
     def fetch_workshop_resources():
@@ -354,8 +592,21 @@ def create_app():
                         {
                             "talk_id": talk_.talk_id,
                             "title": talk_.title,
-                            "speakers": talk_.speakers,
                             "description": talk_.description,
+                            "speakers": [
+                                {
+                                    "talk_speaker_id": s.talk_speaker_id,
+                                    "name": s.name,
+                                    "bio": s.bio,
+                                    "extra_field_one_label": s.extra_field_one_label,
+                                    "extra_field_one_value": s.extra_field_one_value,
+                                    "extra_field_two_label": s.extra_field_two_label,
+                                    "extra_field_two_value": s.extra_field_two_value,
+                                    "extra_field_three_label": s.extra_field_three_label,
+                                    "extra_field_three_value": s.extra_field_three_value,
+                                }
+                                for s in talk_.rel_talk_speakers
+                            ],
                             "resources": [
                                 {
                                     "talk_resource_id": r.talk_resource_id,
@@ -371,8 +622,21 @@ def create_app():
                         {
                             "workshop_id": workshop_.workshop_id,
                             "title": workshop_.title,
-                            "hosts": workshop_.hosts,
                             "description": workshop_.description,
+                            "hosts": [
+                                {
+                                    "workshop_host_id": h.workshop_host_id,
+                                    "name": h.name,
+                                    "bio": h.bio,
+                                    "extra_field_one_label": h.extra_field_one_label,
+                                    "extra_field_one_value": h.extra_field_one_value,
+                                    "extra_field_two_label": h.extra_field_two_label,
+                                    "extra_field_two_value": h.extra_field_two_value,
+                                    "extra_field_three_label": h.extra_field_three_label,
+                                    "extra_field_three_value": h.extra_field_three_value,
+                                }
+                                for h in workshop_.rel_workshop_hosts
+                            ],
                             "resources": [
                                 {
                                     "workshop_resource_id": r.workshop_resource_id,

@@ -2,6 +2,199 @@
     document.addEventListener('alpine:init', () => {
         Alpine.data('workshop_', () => ({
 
+            event_id: null,
+            workshop_id: null,
+            
+            setup(event_id, workshop_id) {
+                this.event_id = event_id;
+                this.workshop_id = workshop_id;
+                this.fetch_hosts();
+                this.fetch_resources();
+            },
+
+            {# HOSTS #}
+
+            hosts_get_url: '/fetch/workshop/hosts',
+            hosts_create_url: '/fetch/workshop/hosts/create',
+            hosts_update_url: '/fetch/workshop/hosts/update',
+            hosts_delete_url: '/fetch/workshop/hosts/delete',
+
+            create_host_dialog: document.getElementById('dialog-create-host'),
+            update_host_dialog: document.getElementById('dialog-update-host'),
+            delete_host_dialog: document.getElementById('dialog-delete-host'),
+
+            create_workshop_host_name: null,
+            create_workshop_host_bio: null,
+            create_workshop_host_extra_field_one_label: null,
+            create_workshop_host_extra_field_one_value: null,
+            create_workshop_host_extra_field_two_label: null,
+            create_workshop_host_extra_field_two_value: null,
+            create_workshop_host_extra_field_three_label: null,
+            create_workshop_host_extra_field_three_value: null,
+
+            update_workshop_host_id: null,
+            update_workshop_host_name: null,
+            update_workshop_host_bio: null,
+            update_workshop_host_extra_field_one_label: null,
+            update_workshop_host_extra_field_one_value: null,
+            update_workshop_host_extra_field_two_label: null,
+            update_workshop_host_extra_field_two_value: null,
+            update_workshop_host_extra_field_three_label: null,
+            update_workshop_host_extra_field_three_value: null,
+
+            delete_workshop_host_id: null,
+            delete_workshop_host_name: null,
+
+            hosts: [],
+
+            set_host_update(
+                workshop_host_id,
+                name,
+                bio,
+                extra_field_one_label,
+                extra_field_one_value,
+                extra_field_two_label,
+                extra_field_two_value,
+                extra_field_three_label,
+                extra_field_three_value,
+            ) {
+                this.update_workshop_host_id = workshop_host_id;
+                this.update_workshop_host_name = name;
+                this.update_workshop_host_bio = bio;
+                this.update_workshop_host_extra_field_one_label = extra_field_one_label;
+                this.update_workshop_host_extra_field_one_value = extra_field_one_value;
+                this.update_workshop_host_extra_field_two_label = extra_field_two_label;
+                this.update_workshop_host_extra_field_two_value = extra_field_two_value;
+                this.update_workshop_host_extra_field_three_label = extra_field_three_label;
+                this.update_workshop_host_extra_field_three_value = extra_field_three_value;
+                this.update_host_dialog.showModal();
+            },
+
+            set_host_delete(workshop_host_id, name) {
+                this.delete_workshop_host_id = workshop_host_id;
+                this.delete_workshop_host_name = name;
+                this.delete_host_dialog.showModal();
+            },
+
+            fetch_hosts() {
+                fetch(
+                    this.hosts_get_url,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            event_id: this.event_id,
+                            workshop_id: this.workshop_id
+                        })
+                    }
+                ).then(
+                    response => response.json()
+                ).then(jsond => {
+                    this.hosts = jsond.workshop_hosts;
+                })
+            },
+
+            create_host() {
+                fetch(
+                    this.hosts_create_url,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            event_id: this.event_id,
+                            workshop_id: this.workshop_id,
+                            name: this.create_workshop_host_name,
+                            bio: this.create_workshop_host_bio,
+                            extra_field_one_label: this.create_workshop_host_extra_field_one_label,
+                            extra_field_one_value: this.create_workshop_host_extra_field_one_value,
+                            extra_field_two_label: this.create_workshop_host_extra_field_two_label,
+                            extra_field_two_value: this.create_workshop_host_extra_field_two_value,
+                            extra_field_three_label: this.create_workshop_host_extra_field_three_label,
+                            extra_field_three_value: this.create_workshop_host_extra_field_three_value,
+                        })
+                    }
+                ).then(
+                    response => response.json()
+                ).then(_ => {
+                    this.fetch_hosts();
+                    this.create_workshop_host_name = null;
+                    this.create_workshop_host_bio = null;
+                    this.create_workshop_host_extra_field_one_label = null;
+                    this.create_workshop_host_extra_field_one_value = null;
+                    this.create_workshop_host_extra_field_two_label = null;
+                    this.create_workshop_host_extra_field_two_value = null;
+                    this.create_workshop_host_extra_field_three_label = null;
+                    this.create_workshop_host_extra_field_three_value = null;
+                    this.create_host_dialog.close();
+                })
+            },
+
+            update_host() {
+                fetch(
+                    this.hosts_update_url,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            workshop_host_id: this.update_workshop_host_id,
+                            name: this.update_workshop_host_name,
+                            bio: this.update_workshop_host_bio,
+                            extra_field_one_label: this.update_workshop_host_extra_field_one_label,
+                            extra_field_one_value: this.update_workshop_host_extra_field_one_value,
+                            extra_field_two_label: this.update_workshop_host_extra_field_two_label,
+                            extra_field_two_value: this.update_workshop_host_extra_field_two_value,
+                            extra_field_three_label: this.update_workshop_host_extra_field_three_label,
+                            extra_field_three_value: this.update_workshop_host_extra_field_three_value,
+                        })
+                    }
+                ).then(
+                    response => response.json()
+                ).then(_ => {
+                    this.fetch_hosts();
+                    this.update_workshop_host_id = null;
+                    this.update_workshop_host_name = null;
+                    this.update_workshop_host_bio = null;
+                    this.update_workshop_host_extra_field_one_label = null;
+                    this.update_workshop_host_extra_field_one_value = null;
+                    this.update_workshop_host_extra_field_two_label = null;
+                    this.update_workshop_host_extra_field_two_value = null;
+                    this.update_workshop_host_extra_field_three_label = null;
+                    this.update_workshop_host_extra_field_three_value = null;
+                    this.update_host_dialog.close();
+                })
+            },
+
+            delete_host() {
+                fetch(
+                    this.hosts_delete_url,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            workshop_host_id: this.delete_workshop_host_id,
+                        })
+                    }
+                )
+                    .then(
+                        response => response.json()
+                    )
+                    .then(_ => {
+                        this.fetch_hosts();
+                        this.delete_workshop_host_id = null;
+                        this.delete_host_dialog.close();
+                    })
+            },
+
+            {# RESOURCES #}
+
             resources_get_url: '/fetch/workshop/resources',
             resources_create_url: '/fetch/workshop/resources/create',
             resources_update_url: '/fetch/workshop/resources/update',
@@ -23,25 +216,16 @@
             delete_workshop_resource_id: null,
             delete_workshop_resource_source: null,
 
-            event_id: null,
-            workshop_id: null,
-
             resources: [],
 
-            setup(event_id, workshop_id) {
-                this.event_id = event_id;
-                this.workshop_id = workshop_id;
-                this.fetch_resources();
-            },
-
-            set_update(workshop_resource_id, type, source) {
+            set_resource_update(workshop_resource_id, type, source) {
                 this.update_workshop_resource_id = workshop_resource_id;
                 this.update_resource_type = type;
                 this.update_resource_source = source;
                 this.update_resource_dialog.showModal();
             },
 
-            set_delete(workshop_resource_id, source) {
+            set_resource_delete(workshop_resource_id, source) {
                 this.delete_workshop_resource_id = workshop_resource_id;
                 this.delete_workshop_resource_source = source;
                 this.delete_resource_dialog.showModal();
