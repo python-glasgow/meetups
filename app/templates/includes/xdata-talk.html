@@ -1,0 +1,144 @@
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('talk_', () => ({
+            resources_get_url: '/fetch/talk/resources',
+            resources_create_url: '/fetch/talk/resources/create',
+            resources_update_url: '/fetch/talk/resources/update',
+            resources_delete_url: '/fetch/talk/resources/delete',
+
+            create_resource_dialog: document.getElementById('dialog-create-resource'),
+            update_resource_dialog: document.getElementById('dialog-update-resource'),
+            delete_resource_dialog: document.getElementById('dialog-delete-resource'),
+
+            default_resource_type: 'url',
+
+            create_resource_type: this.default_resource_type,
+            create_resource_source: null,
+
+            update_resource_type: this.default_resource_type,
+            update_resource_source: null,
+            update_talk_resource_id: null,
+
+            delete_talk_resource_id: null,
+            delete_talk_resource_source: null,
+
+            event_id: null,
+            talk_id: null,
+
+            resources: [],
+
+            setup(event_id, talk_id) {
+                this.event_id = event_id;
+                this.talk_id = talk_id;
+                this.fetch_resources();
+            },
+
+            set_update(talk_resource_id, type, source) {
+                this.update_talk_resource_id = talk_resource_id;
+                this.update_resource_type = type;
+                this.update_resource_source = source;
+                this.update_resource_dialog.showModal();
+            },
+
+            set_delete(talk_resource_id, source) {
+                this.delete_talk_resource_id = talk_resource_id;
+                this.delete_talk_resource_source = source;
+                this.delete_resource_dialog.showModal();
+            },
+
+            fetch_resources() {
+                fetch(
+                    this.resources_get_url,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            event_id: this.event_id,
+                            talk_id: this.talk_id
+                        })
+                    }
+                ).then(
+                    response => response.json()
+                ).then(jsond => {
+                    this.resources = jsond.talk_resources;
+                })
+            },
+
+            create_resource() {
+                fetch(
+                    this.resources_create_url,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            event_id: this.event_id,
+                            talk_id: this.talk_id,
+                            type: this.create_resource_type,
+                            source: this.create_resource_source
+                        })
+                    }
+                ).then(
+                    response => response.json()
+                ).then(_ => {
+                    this.fetch_resources();
+                    this.create_resource_type = this.default_resource_type;
+                    this.create_resource_source = null;
+                    this.create_resource_dialog.close();
+                })
+            },
+
+            update_resource() {
+                fetch(
+                    this.resources_update_url,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            talk_resource_id: this.update_talk_resource_id,
+                            type: this.update_resource_type,
+                            source: this.update_resource_source
+                        })
+                    }
+                ).then(
+                    response => response.json()
+                ).then(_ => {
+                    this.fetch_resources();
+                    this.update_talk_resource_id = null;
+                    this.update_resource_type = this.default_resource_type;
+                    this.update_resource_source = null;
+                    this.update_resource_dialog.close();
+                })
+            },
+
+            delete_resource() {
+                fetch(
+                    this.resources_delete_url,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            talk_resource_id: this.delete_talk_resource_id,
+                        })
+                    }
+                )
+                    .then(
+                        response => response.json()
+                    )
+                    .then(_ => {
+                        this.fetch_resources();
+                        this.delete_talk_resource_id = null;
+                        this.delete_talk_resource_source = null;
+                        this.delete_resource_dialog.close();
+                    })
+            }
+        }));
+    });
+</script>

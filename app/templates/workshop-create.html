@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>🏭 Create Workshop</title>
+
+    {% include 'includes/head.html' %}
+
+    {% include 'includes/xdata-workshop-create.html' %}
+
+</head>
+<body>
+<header>
+    <div class="top-link">
+        <a href="{{ url_for('event', event_id=event.event_id) }}"><- back</a> /
+        {{ event.title }} /
+        Create Workshop
+    </div>
+</header>
+<main x-data="workshop_create">
+    <h1>Create Workshop</h1>
+    <form action="{{ url_for('workshop_create_post', event_id=event.event_id) }}" method="post" class="form">
+        <label for="title">Title</label>
+        <input id="title" type="text" name="title">
+
+        <label for="hosts">Host(s)</label>
+        <input id="hosts" type="text" name="hosts">
+
+        <label for="description">Description</label>
+        <textarea id="description" name="description"></textarea>
+
+        <button type="submit">Create</button>
+    </form>
+</main>
+<footer>
+</footer>
+</body>
+</html>

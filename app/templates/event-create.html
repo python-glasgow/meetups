@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>🎪 Create Event</title>
+
+    {% include 'includes/head.html' %}
+
+    {% include 'includes/xdata-event-create.html' %}
+
+</head>
+<body>
+<header>
+    <h1>Python Glasgow Meetups 🐍</h1>
+    <div class="top-link">
+        <a href="{{ url_for('index') }}"><- back</a> /
+        Create Event
+    </div>
+</header>
+<main x-data="event_create">
+    <form action="{{ url_for('event_create_post') }}" method="post" class="form">
+        <label for="title">Title</label>
+        <input id="title" type="text" name="title"/>
+
+        <label for="location">Location</label>
+        <input id="location" type="text" name="location"/>
+
+        <label for="date">Date</label>
+        <input id="date" type="datetime-local" name="datetime"/>
+
+        <label for="description">Description</label>
+        <textarea id="description" name="description"></textarea>
+
+        <button type="submit">Create</button>
+    </form>
+</main>
+<footer>
+</footer>
+</body>
+</html>

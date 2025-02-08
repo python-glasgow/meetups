@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>🎪 {{ event.title }}</title>
+
+    {% include 'includes/head.html' %}
+
+    {% include 'includes/xdata-event.html' %}
+
+</head>
+<body>
+<header>
+    <div class="top-link">
+        <a href="{{ url_for('index') }}"><- back</a> /
+        {{ event.title }}
+    </div>
+    <h1>Event</h1>
+</header>
+<main x-data="event_">
+
+    <form @submit.prevent class="form">
+        <label for="title">Title</label>
+        <input id="title" type="text" name="title" value="{{ event.title }}"/>
+
+        <label for="location">Location</label>
+        <input id="location" type="text" name="location" value="{{ event.location }}"/>
+
+        <label for="date">Date</label>
+        <input id="date" type="datetime-local" name="date"
+               value="{% if event.datetime %}{{ event.datetime }}{% endif %}"/>
+
+        <label for="description">Description</label>
+        <textarea id="description" name="description">{{ event.description }}</textarea>
+
+        <button type="button">Update</button>
+    </form>
+
+    <h1>Talks</h1>
+
+    <div class="top-link">
+        <a class="a-button"
+           href="{{ url_for('talk_create_get', event_id=event.event_id) }}">
+            Create Talk
+        </a>
+    </div>
+
+    {% if event.rel_talks %}
+        <table>
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Speaker(s)</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for talk in event.rel_talks %}
+                <tr>
+                    <td>{{ talk.title }}</td>
+                    <td>{{ talk.speakers }}</td>
+                    <td>
+                        <a href="{{ url_for('talk', event_id=event.event_id, talk_id=talk.talk_id) }}">Open</a>
+                        |
+                        <a @click="set_delete_talk(
+                        '{{ url_for("talk_delete", event_id=event.event_id, talk_id=talk.talk_id) }}',
+                        '{{ talk.title }}'
+                        )">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="box">
+            <p>No Talks</p>
+        </div>
+    {% endif %}
+
+    <h1>Workshops</h1>
+
+    <div class="top-link">
+        <a class="a-button"
+           href="{{ url_for('workshop_create_get', event_id=event.event_id) }}">
+            Create Workshop
+        </a>
+    </div>
+
+    {% if event.rel_workshops %}
+        <table>
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>host(s)</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for workshop in event.rel_workshops %}
+                <tr>
+                    <td>{{ workshop.title }}</td>
+                    <td>{{ workshop.hosts }}</td>
+                    <td>
+                        <a href="{{ url_for('workshop', event_id=event.event_id, workshop_id=workshop.workshop_id) }}">Open</a>
+                        |
+                        <a @click="set_delete_workshop(
+                        '{{ url_for("workshop_delete", event_id=event.event_id, workshop_id=workshop.workshop_id) }}',
+                        '{{ workshop.title }}'
+                        )">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="box">
+            <p>No workshops</p>
+        </div>
+    {% endif %}
+
+    <dialog id="dialog-delete-talk">
+        <div style="display: flex; flex-direction: column; gap: .50rem;">
+            <h3>Delete Talk</h3>
+
+            <p style="margin: 0">Are you sure you want to delete this talk?</p>
+
+            <p x-text="delete_talk_title" style="padding: 1rem"></p>
+
+            <a class="a-button" x-bind:href="delete_talk_url">Delete</a>
+            <button @click="dialog_delete_talk.close()">Cancel</button>
+        </div>
+    </dialog>
+
+    <dialog id="dialog-delete-workshop">
+        <div style="display: flex; flex-direction: column; gap: .50rem;">
+            <h3>Delete Workshop</h3>
+
+            <p style="margin: 0">Are you sure you want to delete this workshop?</p>
+
+            <p x-text="delete_workshop_title" style="padding: 1rem"></p>
+
+            <a class="a-button" x-bind:href="delete_workshop_url">Delete</a>
+            <button @click="dialog_delete_workshop.close()">Cancel</button>
+        </div>
+    </dialog>
+
+</main>
+<footer>
+</footer>
+</body>
+</html>

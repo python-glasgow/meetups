@@ -1,0 +1,33 @@
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('event_', () => ({
+
+            dialog_delete_talk: null,
+            dialog_delete_workshop: null,
+
+            delete_talk_url: null,
+            delete_talk_title: null,
+
+            delete_workshop_url: null,
+            delete_workshop_title: null,
+
+            set_delete_talk(url, title) {
+                this.delete_talk_url = url;
+                this.delete_talk_title = title;
+                this.dialog_delete_talk.showModal();
+            },
+
+            set_delete_workshop(url, title) {
+                this.delete_workshop_url = url;
+                this.delete_workshop_title = title;
+                this.dialog_delete_workshop.showModal();
+            },
+
+            init() {
+                this.dialog_delete_talk = document.getElementById('dialog-delete-talk');
+                this.dialog_delete_workshop = document.getElementById('dialog-delete-workshop');
+            },
+
+        }));
+    });
+</script>

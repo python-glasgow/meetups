@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>🏭 {{ workshop.title }}</title>
+
+    {% include 'includes/head.html' %}
+
+    {% include 'includes/xdata-workshop.html' %}
+
+</head>
+<body>
+<header>
+    <div class="top-link">
+        <a href="{{ url_for('event', event_id=event.event_id) }}"><- back</a> /
+        {{ event.title }} /
+        {{ workshop.title }}
+    </div>
+</header>
+<main x-data="workshop_"
+      x-init="setup('{{ event.event_id }}', '{{ workshop.workshop_id }}')">
+
+    <form action="{{ url_for('workshop_update', event_id=event.event_id, workshop_id=workshop.workshop_id) }}"
+          method="post"
+          class="form">
+        <label for="title">Title</label>
+        <input id="title" type="text" name="title" value="{{ workshop.title }}">
+
+        <label for="hosts">Hosts(s)</label>
+        <input id="hosts" type="text" name="hosts" value="{{ workshop.hosts }}">
+
+        <label for="description">Description</label>
+        <textarea id="description" name="description">{{ workshop.description }}</textarea>
+
+        <button type="submit">Update</button>
+    </form>
+
+    <h2>Resources</h2>
+
+    <div class="top-link">
+        <a class="a-button" @click="create_resource_dialog.showModal()">Create Resource</a>
+    </div>
+
+    <table x-show="resources.length > 0" x-cloak>
+        <thead>
+        <tr>
+            <th>Type</th>
+            <th>Source</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <template x-for="resource in resources">
+            <tr>
+                <td x-text="resource.type"></td>
+                <td x-text="resource.source"></td>
+                <td>
+                    <a @click="set_update(
+                    resource.workshop_resource_id,
+                    resource.type,
+                    resource.source
+                    )">Update</a>
+                    |
+                    <a @click="set_delete(
+                    resource.workshop_resource_id,
+                    resource.source,
+                    )">Delete</a>
+                </td>
+            </tr>
+        </template>
+        </tbody>
+    </table>
+
+    <div class="box" x-show="resources.length === 0" x-cloak>
+        <p>No Resources</p>
+    </div>
+
+    <dialog id="dialog-create-resource">
+        <form @submit.prevent
+              class="form"
+              style="min-width: 500px;">
+
+            <h3>Create Resource</h3>
+
+            <label for="resource-type">Type</label>
+            <select id="resource-type" name="type" x-model="create_resource_type">
+                <option value="select...">Select...</option>
+                <option value="url">url</option>
+                <option value="file">file</option>
+            </select>
+
+            <label for="resource-source">Source</label>
+            <input id="resource-source" type="text" name="source" x-model="create_resource_source">
+
+            <button type="submit" @click="create_resource()">Create</button>
+            <button type="button" @click="create_resource_dialog.close()">Cancel</button>
+        </form>
+    </dialog>
+
+    <dialog id="dialog-update-resource">
+        <form @submit.prevent
+              class="form"
+              style="min-width: 500px;">
+
+            <h3>Update Resource</h3>
+
+            <label for="resource-type">Type</label>
+            <select id="resource-type" name="type" x-model="update_resource_type">
+                <option value="select...">Select...</option>
+                <option value="url">url</option>
+                <option value="file">file</option>
+            </select>
+
+            <label for="resource-source">Source</label>
+            <input id="resource-source" type="text" name="source" x-model="update_resource_source">
+
+            <button type="submit" @click="update_resource()">Update</button>
+            <button type="button" @click="update_resource_dialog.close()">Cancel</button>
+        </form>
+    </dialog>
+
+    <dialog id="dialog-delete-resource">
+        <div style="display: flex; flex-direction: column; gap: .50rem;">
+
+            <h3>Delete Resource</h3>
+
+            <p style="margin: 0">Are you sure you want to delete this resource?</p>
+
+            <p x-text="delete_workshop_resource_source" style="padding: 1rem"></p>
+
+            <button type="submit" @click="delete_resource()">Delete</button>
+            <button type="button" @click="delete_resource_dialog.close()">Cancel</button>
+        </div>
+    </dialog>
+
+</main>
+<footer>
+</footer>
+</body>
+</html>

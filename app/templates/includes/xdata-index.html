@@ -1,0 +1,20 @@
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('index_', () => ({
+            delete_dialog: null,
+
+            delete_title: null,
+            delete_dialog_url: null,
+
+            set_delete_dialog(title, delete_url) {
+                this.delete_title = title;
+                this.delete_dialog_url = delete_url;
+                this.delete_dialog.showModal();
+            },
+
+            init() {
+                this.delete_dialog = document.getElementById('delete_dialog');
+            }
+        }));
+    });
+</script>
