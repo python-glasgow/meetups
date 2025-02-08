@@ -586,7 +586,7 @@ def create_app():
                     "event_id": event_.event_id,
                     "title": event_.title,
                     "description": event_.description,
-                    "datetime": event_.datetime.strftime("%Y-%m-%dT%H:%M"),
+                    "datetime": event_.datetime.strftime("%Y-%m-%dT%H:%M") if event_.datetime else None,
                     "location": event_.location,
                     "talks": [
                         {
