@@ -1,0 +1,17 @@
+[project]
+name = "python-glasgow-meetup-archive"
+version = "1.0.0"
+description = "This repository contains resources from the Python Glasgow Meetups."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "flask>=3.1.0",
+    "flask-sqlalchemy>=3.1.1",
+]
+
+
+[tool.ruff]
+line-length = 88
+[lint]
+select = ["F", "E", "W"]
+ignore = ["E501"] # Example: ignore long line checks
