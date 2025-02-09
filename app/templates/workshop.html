@@ -237,9 +237,9 @@ RESOURCES RESOURCES RESOURCES RESOURCES RESOURCES RESOURCES RESOURCES
     <table x-show="resources.length > 0" x-cloak>
         <thead>
         <tr>
-            <th>Type</th>
+            <th style="width: 50px">Type</th>
             <th>Source</th>
-            <th>Action</th>
+            <th style="width: 140px">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -273,7 +273,13 @@ RESOURCES RESOURCES RESOURCES RESOURCES RESOURCES RESOURCES RESOURCES
               class="form"
               style="min-width: 500px;">
 
-            <h3>Create Resource</h3>
+            <h3 style="margin-bottom: 0">Create Resource</h3>
+
+            <div class="box" style="max-width: 500px;">
+                <p style="font-size: 0.8rem">If your resource is a file, and you plan to commit the file,
+                    only include the filename in the source and the GitHub location
+                    will be added automatically.</p>
+            </div>
 
             <label for="resource-type">Type</label>
             <select id="resource-type" name="type" x-model="create_resource_type">

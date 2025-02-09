@@ -4,10 +4,12 @@
 
             event_id: null,
             workshop_id: null,
+            event_date: null,
             
-            setup(event_id, workshop_id) {
+            setup(event_id, workshop_id, event_date) {
                 this.event_id = event_id;
                 this.workshop_id = workshop_id;
+                this.event_date = event_date;
                 this.fetch_hosts();
                 this.fetch_resources();
             },
@@ -262,6 +264,7 @@
                         body: JSON.stringify({
                             event_id: this.event_id,
                             workshop_id: this.workshop_id,
+                            event_date: this.event_date,
                             type: this.create_resource_type,
                             source: this.create_resource_source
                         })

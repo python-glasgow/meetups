@@ -4,10 +4,12 @@
 
             event_id: null,
             talk_id: null,
+            event_date: null,
 
-            setup(event_id, talk_id) {
+            setup(event_id, talk_id, event_date) {
                 this.event_id = event_id;
                 this.talk_id = talk_id;
+                this.event_date = event_date;
                 this.fetch_speakers();
                 this.fetch_resources();
             },
@@ -262,6 +264,7 @@
                         body: JSON.stringify({
                             event_id: this.event_id,
                             talk_id: this.talk_id,
+                            event_date: this.event_date,
                             type: this.create_resource_type,
                             source: this.create_resource_source
                         })

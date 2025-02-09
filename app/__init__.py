@@ -113,7 +113,8 @@ def create_app():
     def talk(event_id: int, talk_id: int):
         event_ = Events.get_by_id(event_id)
         talk_ = Talks.get_by_id(talk_id)
-        return render_template("talk.html", event=event_, talk=talk_)
+        event_date = event_.datetime.strftime("%Y-%m-%d")
+        return render_template("talk.html", event=event_, talk=talk_, event_date=event_date)
 
     @app.post("/event/<int:event_id>/talk/<int:talk_id>/update")
     def talk_update(event_id: int, talk_id: int):
@@ -278,9 +279,15 @@ def create_app():
     def fetch_talk_resources_create():
         jsond = request.get_json()
 
+        event_date = jsond["event_date"]
         talk_id = jsond["talk_id"]
         type_ = jsond["type"]
         source = jsond["source"]
+
+        if type_ == "file":
+            if not source.startswith("http"):
+                source = (f"https://github.com/python-glasgow/"
+                          f"meetups/blob/main/resources/{event_date}/") + source
 
         new_talk_resource = TalkResources.create(
             talk_id=talk_id,
@@ -526,9 +533,15 @@ def create_app():
     def fetch_workshop_resources_create():
         jsond = request.get_json()
 
+        event_date = jsond["event_date"]
         workshop_id = jsond["workshop_id"]
         type_ = jsond["type"]
         source = jsond["source"]
+
+        if type_ == "file":
+            if not source.startswith("http"):
+                source = (f"https://github.com/python-glasgow/"
+                          f"meetups/blob/main/resources/{event_date}/") + source
 
         new_workshop_resource = WorkshopResources.create(
             workshop_id=workshop_id,
