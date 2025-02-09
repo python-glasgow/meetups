@@ -1,123 +1,123 @@
 {
-    "name": "The Python Glasgow Meetup Archive",
-    "version": "1.0.0",
-    "events": [
-        {
-            "event_id": 1,
-            "title": "Python Glasgow: Open Mic Night! \ud83c\udfa4\ud83d\udc0d",
-            "description": "Calling all Python enthusiasts, from beginners to seasoned developers! Whether\r\nyou've just started your Python journey or you're working on advanced projects,\r\nthis Python Open Mic Night is your chance to shine and share with the\r\ncommunity.\r\n\r\nHere\u2019s how it works:\r\nEach speaker gets 15 minutes to present.\r\nThe topic? Anything Python-related! It could be a project, idea, library, tool,\r\nor even a story about your Python learning journey. (Don\u2019t worry if it\u2019s not\r\npurely Python\u2014it just needs to connect to Python in some way!) All experience\r\nlevels are welcome, from complete beginners to professionals.\r\n\r\nWhy attend?\r\nGet inspired by what others are working on. Learn something new\u2014whether it\u2019s a\r\ncoding trick, a tool, or a new perspective. Connect with Glasgow\u2019s vibrant\r\nPython community. Want to present? You don\u2019t need to be a professional speaker!\r\nIf you\u2019ve got something to share, we\u2019d love to hear it. Just let us know\r\nbeforehand so we can schedule your slot.\r\n\r\nNot presenting?\r\nNo problem! Come along, enjoy the talks, and meet like-minded Pythonistas.\r\n\r\nIt\u2019s a laid-back, fun environment for sharing, learning, and connecting. Don\u2019t\r\nmiss out\u2014see you there!\r\n\r\nGot questions or want to reserve a speaker slot? Reach out to us in our\r\nsubmission\r\nform ([https://polls.glasgow.social/index.php/346426?lang=en](https://polls.glasgow.social/index.php/346426?lang=en))\r\nor by email\r\nat [organisers@pythonscotland.org](mailto:organisers@pythonscotland.org)",
-            "datetime": "2025-02-05T18:30",
-            "location": "The Gamer Club, Bath Lane",
-            "talks": [
-                {
-                    "talk_id": 2,
-                    "title": "Simple demo on UV",
-                    "description": "",
-                    "speakers": [
-                        {
-                            "talk_speaker_id": 2,
-                            "name": "Gabriele Calvo",
-                            "bio": null,
-                            "extra_field_one_label": null,
-                            "extra_field_one_value": null,
-                            "extra_field_two_label": null,
-                            "extra_field_two_value": null,
-                            "extra_field_three_label": null,
-                            "extra_field_three_value": null
-                        }
-                    ],
-                    "resources": [
-                        {
-                            "talk_resource_id": 1,
-                            "type": "url",
-                            "source": "https://github.com/gabrielecalvo/uv-demo"
-                        }
-                    ]
-                },
-                {
-                    "talk_id": 3,
-                    "title": "From Dirty Nappies to Clean Data: Analysing Newborn Care with Python",
-                    "description": "",
-                    "speakers": [
-                        {
-                            "talk_speaker_id": 3,
-                            "name": "Juan Palomeque-Gonzalez",
-                            "bio": null,
-                            "extra_field_one_label": null,
-                            "extra_field_one_value": null,
-                            "extra_field_two_label": null,
-                            "extra_field_two_value": null,
-                            "extra_field_three_label": null,
-                            "extra_field_three_value": null
-                        }
-                    ],
-                    "resources": [
-                        {
-                            "talk_resource_id": 2,
-                            "type": "file",
-                            "source": "https://github.com/python-glasgow/meetups/blob/main/resources/2025-02-05/From_Dirty_Nappies_to_Clean_Data_Analyzing_Newborn_Care_with_Python.pdf"
-                        }
-                    ]
-                },
-                {
-                    "talk_id": 4,
-                    "title": "Unknown",
-                    "description": "",
-                    "speakers": [
-                        {
-                            "talk_speaker_id": 4,
-                            "name": "Ed",
-                            "bio": null,
-                            "extra_field_one_label": null,
-                            "extra_field_one_value": null,
-                            "extra_field_two_label": null,
-                            "extra_field_two_value": null,
-                            "extra_field_three_label": null,
-                            "extra_field_three_value": null
-                        }
-                    ],
-                    "resources": []
-                },
-                {
-                    "talk_id": 5,
-                    "title": "Unknown",
-                    "description": "",
-                    "speakers": [
-                        {
-                            "talk_speaker_id": 5,
-                            "name": "Paul Mullen",
-                            "bio": null,
-                            "extra_field_one_label": null,
-                            "extra_field_one_value": null,
-                            "extra_field_two_label": null,
-                            "extra_field_two_value": null,
-                            "extra_field_three_label": null,
-                            "extra_field_three_value": null
-                        }
-                    ],
-                    "resources": []
-                },
-                {
-                    "talk_id": 6,
-                    "title": "Groovebasin to Dokuwiki: Using BeautifulSoup for html to wiki table data transformation",
-                    "description": "A demonstration of using Python for a specific use case; taking music playlists from the web application Groovebasin and transforming it into Dokuwiki formatted tables to be archived on a wiki. Uses the Python library BeautifulSoup which is an html parser.",
-                    "speakers": [
-                        {
-                            "talk_speaker_id": 6,
-                            "name": "William Nelson",
-                            "bio": null,
-                            "extra_field_one_label": "Matrix Account",
-                            "extra_field_one_value": "@sajuuk:matrix.org",
-                            "extra_field_two_label": null,
-                            "extra_field_two_value": null,
-                            "extra_field_three_label": null,
-                            "extra_field_three_value": null
-                        }
-                    ],
-                    "resources": []
-                }
-            ],
-            "workshops": []
-        }
-    ]
+ "name": "The Python Glasgow Meetup Archive",
+ "version": "1.0.0",
+ "events": [
+  {
+   "event_id": 1,
+   "title": "Python Glasgow: Open Mic Night! \ud83c\udfa4\ud83d\udc0d",
+   "description": "Calling all Python enthusiasts, from beginners to seasoned developers! Whether\r\nyou've just started your Python journey or you're working on advanced projects,\r\nthis Python Open Mic Night is your chance to shine and share with the\r\ncommunity.\r\n\r\nHere\u2019s how it works:\r\nEach speaker gets 15 minutes to present.\r\nThe topic? Anything Python-related! It could be a project, idea, library, tool,\r\nor even a story about your Python learning journey. (Don\u2019t worry if it\u2019s not\r\npurely Python\u2014it just needs to connect to Python in some way!) All experience\r\nlevels are welcome, from complete beginners to professionals.\r\n\r\nWhy attend?\r\nGet inspired by what others are working on. Learn something new\u2014whether it\u2019s a\r\ncoding trick, a tool, or a new perspective. Connect with Glasgow\u2019s vibrant\r\nPython community. Want to present? You don\u2019t need to be a professional speaker!\r\nIf you\u2019ve got something to share, we\u2019d love to hear it. Just let us know\r\nbeforehand so we can schedule your slot.\r\n\r\nNot presenting?\r\nNo problem! Come along, enjoy the talks, and meet like-minded Pythonistas.\r\n\r\nIt\u2019s a laid-back, fun environment for sharing, learning, and connecting. Don\u2019t\r\nmiss out\u2014see you there!\r\n\r\nGot questions or want to reserve a speaker slot? Reach out to us in our\r\nsubmission\r\nform ([https://polls.glasgow.social/index.php/346426?lang=en](https://polls.glasgow.social/index.php/346426?lang=en))\r\nor by email\r\nat [organisers@pythonscotland.org](mailto:organisers@pythonscotland.org)",
+   "datetime": "2025-02-05T18:30",
+   "location": "The Gamer Club, Bath Lane",
+   "talks": [
+    {
+     "talk_id": 2,
+     "title": "Simple demo on UV",
+     "description": "",
+     "speakers": [
+      {
+       "talk_speaker_id": 2,
+       "name": "Gabriele Calvo",
+       "bio": null,
+       "extra_field_one_label": null,
+       "extra_field_one_value": null,
+       "extra_field_two_label": null,
+       "extra_field_two_value": null,
+       "extra_field_three_label": null,
+       "extra_field_three_value": null
+      }
+     ],
+     "resources": [
+      {
+       "talk_resource_id": 1,
+       "type": "url",
+       "source": "https://github.com/gabrielecalvo/uv-demo"
+      }
+     ]
+    },
+    {
+     "talk_id": 3,
+     "title": "From Dirty Nappies to Clean Data: Analysing Newborn Care with Python",
+     "description": "",
+     "speakers": [
+      {
+       "talk_speaker_id": 3,
+       "name": "Juan Palomeque-Gonzalez",
+       "bio": null,
+       "extra_field_one_label": null,
+       "extra_field_one_value": null,
+       "extra_field_two_label": null,
+       "extra_field_two_value": null,
+       "extra_field_three_label": null,
+       "extra_field_three_value": null
+      }
+     ],
+     "resources": [
+      {
+       "talk_resource_id": 2,
+       "type": "file",
+       "source": "https://github.com/python-glasgow/meetups/blob/main/resources/2025-02-05/From_Dirty_Nappies_to_Clean_Data_Analyzing_Newborn_Care_with_Python.pdf"
+      }
+     ]
+    },
+    {
+     "talk_id": 4,
+     "title": "Unknown",
+     "description": "",
+     "speakers": [
+      {
+       "talk_speaker_id": 4,
+       "name": "Ed",
+       "bio": null,
+       "extra_field_one_label": null,
+       "extra_field_one_value": null,
+       "extra_field_two_label": null,
+       "extra_field_two_value": null,
+       "extra_field_three_label": null,
+       "extra_field_three_value": null
+      }
+     ],
+     "resources": []
+    },
+    {
+     "talk_id": 5,
+     "title": "Unknown",
+     "description": "",
+     "speakers": [
+      {
+       "talk_speaker_id": 5,
+       "name": "Paul Mullen",
+       "bio": null,
+       "extra_field_one_label": null,
+       "extra_field_one_value": null,
+       "extra_field_two_label": null,
+       "extra_field_two_value": null,
+       "extra_field_three_label": null,
+       "extra_field_three_value": null
+      }
+     ],
+     "resources": []
+    },
+    {
+     "talk_id": 6,
+     "title": "Groovebasin to Dokuwiki: Using BeautifulSoup for html to wiki table data transformation",
+     "description": "A demonstration of using Python for a specific use case; taking music playlists from the web application Groovebasin and transforming it into Dokuwiki formatted tables to be archived on a wiki. Uses the Python library BeautifulSoup which is an html parser.",
+     "speakers": [
+      {
+       "talk_speaker_id": 6,
+       "name": "William Nelson",
+       "bio": null,
+       "extra_field_one_label": "Matrix Account",
+       "extra_field_one_value": "@sajuuk:matrix.org",
+       "extra_field_two_label": null,
+       "extra_field_two_value": null,
+       "extra_field_three_label": null,
+       "extra_field_three_value": null
+      }
+     ],
+     "resources": []
+    }
+   ],
+   "workshops": []
+  }
+ ]
 }
