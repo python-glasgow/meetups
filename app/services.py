@@ -10,4 +10,4 @@ class ArchiveJson:
         self.filepath = filepath
 
     def update(self, data: dict[str, Any]) -> None:
-        self.filepath.write_text(dumps(data, indent=4))
+        self.filepath.write_text(dumps(data, indent=1))
