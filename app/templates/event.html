@@ -19,7 +19,9 @@
 </header>
 <main x-data="event_">
 
-    <form @submit.prevent class="form">
+    <form action="{{ url_for('event_update', event_id=event.event_id) }}"
+          method="post"
+          class="form">
         <label for="title">Title</label>
         <input id="title" type="text" name="title" value="{{ event.title }}"/>
 
@@ -27,13 +29,13 @@
         <input id="location" type="text" name="location" value="{{ event.location }}"/>
 
         <label for="date">Date</label>
-        <input id="date" type="datetime-local" name="date"
+        <input id="date" type="datetime-local" name="datetime"
                value="{% if event.datetime %}{{ event.datetime }}{% endif %}"/>
 
         <label for="description">Description</label>
         <textarea id="description" name="description">{{ event.description }}</textarea>
 
-        <button type="button">Update</button>
+        <button type="submit">Update</button>
     </form>
 
     <h1>Talks</h1>

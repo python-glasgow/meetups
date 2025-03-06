@@ -70,11 +70,13 @@ def create_app():
 
     @app.post("/event/<int:event_id>/update")
     def event_update(event_id):
+        _datetime = datetime.strptime(request.form["datetime"], "%Y-%m-%dT%H:%M")
+
         Events.update(
             event_id=event_id,
             title=request.form["title"],
             description=request.form["description"],
-            datetime=request.form["datetime"],
+            datetime=_datetime,
             location=request.form["location"],
         )
 
@@ -89,14 +91,14 @@ def create_app():
 
     @app.get("/event/<int:event_id>/talk/create")
     def talk_create_get(
-        event_id: int,
+            event_id: int,
     ):
         event_ = Events.get_by_id(event_id)
         return render_template("talk-create.html", event=event_)
 
     @app.post("/event/<int:event_id>/talk/create")
     def talk_create_post(
-        event_id: int,
+            event_id: int,
     ):
         title = request.form.get("title")
         description = request.form.get("description")
@@ -338,14 +340,14 @@ def create_app():
 
     @app.get("/event/<int:event_id>/workshop/create")
     def workshop_create_get(
-        event_id: int,
+            event_id: int,
     ):
         event_ = Events.get_by_id(event_id)
         return render_template("workshop-create.html", event=event_)
 
     @app.post("/event/<int:event_id>/workshop/create")
     def workshop_create_post(
-        event_id: int,
+            event_id: int,
     ):
         title = request.form.get("title")
         description = request.form.get("description")
